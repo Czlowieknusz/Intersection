@@ -7,7 +7,22 @@
 
 
 class Animator {
+    void initScreen();
 
+    void animationLoop();
+
+    void animateIntersection();
+
+    void animateSquare(int startX, int startY, int endX, int endY);
+
+    void animateRoadMarking();
+
+    int size_X, size_Y;
+
+public:
+    Animator();
+
+    virtual ~Animator();
 };
 
 

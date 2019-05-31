@@ -1,6 +1,6 @@
-#include "Intersection.h"
+#include "Factory.h"
 
 int main() {
-    Intersection intersection;
+    Factory intersection;
     return 0;
 }

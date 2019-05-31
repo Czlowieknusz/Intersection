@@ -2,17 +2,17 @@
 // Created by janek on 31.05.19.
 //
 
-#ifndef INTERSECTION_INTERSECTION_H
-#define INTERSECTION_INTERSECTION_H
+#ifndef INTERSECTION_FACTORY_H
+#define INTERSECTION_FACTORY_H
 
 #include "Animator.h"
 
-class Intersection {
+class Factory {
     Animator animator;
 
 public:
-    Intersection();
+    Factory();
 };
 
 
-#endif //INTERSECTION_INTERSECTION_H
+#endif //INTERSECTION_FACTORY_H

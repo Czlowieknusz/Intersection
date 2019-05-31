@@ -2,9 +2,9 @@
 // Created by janek on 31.05.19.
 //
 
-#include "Intersection.h"
+#include "Factory.h"
 #include <unistd.h>
 
-Intersection::Intersection() : animator() {
+Factory::Factory() : animator() {
     usleep(1500000);
 }
