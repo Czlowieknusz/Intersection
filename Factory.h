@@ -5,11 +5,10 @@
 #ifndef INTERSECTION_INTERSECTION_H
 #define INTERSECTION_INTERSECTION_H
 
+#include "Animator.h"
 
 class Intersection {
-    void InitScreen();
-
-    int size_X, size_Y;
+    Animator animator;
 
 public:
     Intersection();
