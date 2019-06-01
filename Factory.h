@@ -6,10 +6,13 @@
 #define INTERSECTION_FACTORY_H
 
 #include "Animator.h"
+#include "Car.h"
+#include <list>
+#include <memory>
 
 class Factory {
-    Animator animator;
-
+    std::list<std::shared_ptr<Car>> cars_;
+    std::shared_ptr<Animator> animator_;
 public:
     Factory();
 };

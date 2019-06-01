@@ -5,6 +5,7 @@
 #include "Animator.h"
 #include <ncurses.h>
 #include <unistd.h>
+#include <iostream>
 
 void Animator::initScreen() {
     initscr();
@@ -12,18 +13,18 @@ void Animator::initScreen() {
     getmaxyx(stdscr, size_X, size_Y);
 }
 
-Animator::Animator() {
-    initScreen();
-    animationLoop();
+Animator::Animator(std::list<std::shared_ptr<Car>> &cars) : cars_(cars) {
+    //  initScreen();
+//    animationLoop();
 }
 
 void Animator::animationLoop() {
     animateIntersection();
     while (true) {
-
+//        if (cars_.empty())
+//            animateCars();
         refresh();
         usleep(500000);
-
     }
 }
 
@@ -74,7 +75,7 @@ void Animator::animateSquare(int startX, int startY, int endX, int endY) {
     for (int i = startX; i < endX; ++i) {
         wmove(stdscr, i, startY);
         for (int j = startY; j < endY; ++j) {
-            printw(" ");
+            addstr(" ");
         }
     }
 }
@@ -83,19 +84,29 @@ void Animator::animateRoadMarking() {
     attron(COLOR_PAIR(2));
     wmove(stdscr, 12, 0);
     for (int i = 0; i < 33 / 2 + 1; ++i) {
-        printw("_ ");
+        addstr("_ ");
     }
 
     wmove(stdscr, 12, 44);
     for (int i = 0; i < 33 / 2 + 2; ++i) {
-        printw("_ ");
+        addstr("_ ");
     }
 
     for (int i = 0; i < 10; ++i) {
-        mvprintw(0 + i, 38, "|");
+        mvaddstr(0 + i, 38, "|");
     }
 
     for (int i = 0; i < 10; ++i) {
-        mvprintw(16 + i, 38, "|");
+        mvaddstr(16 + i, 38, "|");
     }
+}
+
+void Animator::animateCars() {
+//    for (const auto &car : cars_) {
+//        animateCar(car);
+//    }
+}
+
+void Animator::animateCar(const std::shared_ptr<Car> &car) {
+
 }
