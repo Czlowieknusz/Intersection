@@ -17,7 +17,7 @@ Factory::Factory() : cars_({std::make_shared<Car>(2, 2, false)}),
 
     }
     animateThread.join();
- //   worldEnder.join();
+    //   worldEnder.join();
     //cars_.emplace_back(std::make_shared<Car>(2, 2));
 }
 
@@ -25,6 +25,16 @@ void Factory::checkIfEnd() {
     while (not isEndOfProgram) {
         if (getch()) {
             isEndOfProgram = true;
+        }
+    }
+}
+
+void Factory::moverLoop() {
+    while (not isEndOfProgram) {
+        for (auto &car : cars_) {
+            usleep(100000);
+            std::lock_guard<std::mutex> lockGuard(factoryMutex);
+            car->moveRight();
         }
     }
 }

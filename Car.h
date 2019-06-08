@@ -5,8 +5,10 @@
 #ifndef INTERSECTION_CAR_H
 #define INTERSECTION_CAR_H
 
+#include "Direction.h"
 
 class Car {
+    Direction direction;
     int coord_X, coord_Y;
     bool isVertical;
 
@@ -21,7 +23,14 @@ public:
 
     void setCoordY(int coordY);
 
-public:
+    void moveUp();
+
+    void moveDown();
+
+    void moveLeft();
+
+    void moveRight();
+
     Car(int coordX, int coordY, bool isVertical);
 
     ~Car();
