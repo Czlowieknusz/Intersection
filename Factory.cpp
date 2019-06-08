@@ -6,17 +6,25 @@
 #include <unistd.h>
 #include <iostream>
 #include <thread>
+#include <ncurses.h>
 
 Factory::Factory() : cars_({std::make_shared<Car>(2, 2, false)}),
-                     animator_(std::make_shared<Animator>(cars_)) {
+                     animator_(std::make_shared<Animator>(cars_)),
+                     isEndOfProgram(false) {
     std::thread animateThread(&Animator::animationLoop, animator_);
-    if (cars_.empty())
-        std::cout << "Dupencja";
-    std::cout << "size = " << cars_.size();
-    usleep(1500000);
-    usleep(1500000);
-    usleep(1500000);
-    usleep(1500000);
+//    std::thread worldEnder(&Factory::checkIfEnd, this);
+    while (not isEndOfProgram) {
+
+    }
     animateThread.join();
+ //   worldEnder.join();
     //cars_.emplace_back(std::make_shared<Car>(2, 2));
+}
+
+void Factory::checkIfEnd() {
+    while (not isEndOfProgram) {
+        if (getch()) {
+            isEndOfProgram = true;
+        }
+    }
 }

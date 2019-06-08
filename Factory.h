@@ -13,6 +13,12 @@
 class Factory {
     std::list<std::shared_ptr<Car>> cars_;
     std::shared_ptr<Animator> animator_;
+    bool isEndOfProgram;
+
+
+    void checkIfEnd();
+
+
 public:
     Factory();
 };

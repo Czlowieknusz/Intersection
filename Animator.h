@@ -17,11 +17,15 @@ class Animator {
 
     void animateSquare(int startX, int startY, int endX, int endY);
 
+    void animateSquares();
+
     void animateRoadMarking();
 
     void animateCars();
 
     void animateCar(const std::shared_ptr<Car> &car);
+
+    void animateCar(const int);
 
     int size_X, size_Y;
     std::list<std::shared_ptr<Car>> &cars_;
