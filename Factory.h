@@ -12,6 +12,7 @@
 #include <mutex>
 #include <queue>
 #include "Mover.h"
+#include "DirectionGenerator.h"
 
 class Factory {
     std::list<std::shared_ptr<Car>> topCars_;
@@ -21,6 +22,7 @@ class Factory {
     std::list<std::shared_ptr<Car>> cars_;
     std::shared_ptr<Animator> animator_;
     std::shared_ptr<Mover> mover_;
+    std::shared_ptr<DirectionGenerator> directionGenerator_;
     std::mutex factoryMutex;
     bool isEndOfProgram;
 

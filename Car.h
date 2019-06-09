@@ -8,7 +8,7 @@
 #include "Direction.h"
 
 class Car {
-    Direction direction;
+    Direction direction_;
     int coord_X, coord_Y;
     bool isVertical;
 
@@ -31,7 +31,9 @@ public:
 
     void moveRight();
 
-    Car(int coordX, int coordY, bool isVertical);
+    Car(int coordX, int coordY, Direction direction);
+
+    Direction getDirection() const;
 
     ~Car();
 };

@@ -10,8 +10,8 @@ void Car::move(int x, int y) {
 
 }
 
-Car::Car(int coordX, int coordY, bool isVertical) : coord_X(coordX), coord_Y(coordY), isVertical(isVertical),
-                                                    direction(Direction::TOP) {}
+Car::Car(int coordX, int coordY, Direction direction) : coord_X(coordX), coord_Y(coordY),
+                                                        direction_(direction) {}
 
 int Car::getCoordX() const {
     return coord_X;
@@ -43,6 +43,10 @@ void Car::moveLeft() {
 
 void Car::moveRight() {
     ++coord_Y;
+}
+
+Direction Car::getDirection() const {
+    return direction_;
 }
 /*
  *

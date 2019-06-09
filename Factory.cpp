@@ -10,18 +10,18 @@
 
 Factory::Factory() : cars_({}),
                      animator_(std::make_shared<Animator>()), mover_(std::make_shared<Mover>()),
-                     isEndOfProgram(false) {
+                     isEndOfProgram(false), directionGenerator_(std::make_shared<DirectionGenerator>()) {
     std::thread animateThread([this]() { animationLoop(); });
     std::thread moverThread([this]() { moverLoop(); });
- //   std::thread worldEnder([this]() { checkIfEnd(); });
+    std::thread worldEnder([this]() { checkIfEnd(); });
 
-    cars_.emplace_back(std::make_shared<Car>(0, 35, false));
+    cars_.emplace_back(std::make_shared<Car>(0, 35, directionGenerator_->getRandom()));
     while (not isEndOfProgram) {
         // tu wytwarzamy auta
     }
     animateThread.join();
     moverThread.join();
- //   worldEnder.join();
+    worldEnder.join();
 }
 
 void Factory::checkIfEnd() {
@@ -50,9 +50,9 @@ void Factory::animationLoop() {
         std::lock_guard<std::mutex> lockGuard(factoryMutex);
         animator_->animate(cars_);
 //        animator_->animate(topCars_);
- //       animator_->animate(bottomCars_);
-  //      animator_->animate(leftCars_);
-   //     animator_->animate(rightCars_);
+        //       animator_->animate(bottomCars_);
+        //      animator_->animate(leftCars_);
+        //     animator_->animate(rightCars_);
     }
 }
 
