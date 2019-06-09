@@ -6,20 +6,25 @@
 
 // tutaj logika wykrywająca czy top czy bottom itd. albo templatka
 void Mover::moveCars(std::list<std::shared_ptr<Car>> &cars) {
-    for (auto &car: cars) {
-        switch (car->getDirection()) {
+    for (auto car = cars.begin(); car != cars.end(); ++car) {
+        switch (car->get()->getDirection()) {
             case Direction::TOP:
-                car->moveUp();
+                car->get()->moveUp();
                 break;
             case Direction::BOTTOM:
-                car->moveDown();
+                car->get()->moveDown();
                 break;
             case Direction::LEFT:
-                car->moveLeft();
+                car->get()->moveLeft();
                 break;
             case Direction::RIGHT:
-                car->moveRight();
+                car->get()->moveRight();
                 break;
         }
     }
+}
+
+bool Mover::checkIfFreeToMove() {
+
+    return false;
 }

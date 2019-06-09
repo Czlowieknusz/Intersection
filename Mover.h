@@ -11,6 +11,7 @@
 #include <memory>
 
 class Mover {
+    bool checkIfFreeToMove();
 public:
     void moveCars(std::list<std::shared_ptr<Car>> &cars);
 };
