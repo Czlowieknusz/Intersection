@@ -103,10 +103,10 @@ void Animator::animateCars(std::list<std::shared_ptr<Car>> &cars) {
 }
 
 void Animator::animateCar(const std::shared_ptr<Car> &car) {
-    mvaddstr(car->getCoordX(), car->getCoordX(), "|");
-    mvaddstr(car->getCoordX(), car->getCoordX() + 1, "|");
-    mvaddstr(car->getCoordX() + 1, car->getCoordX(), "|");
-    mvaddstr(car->getCoordX() + 1, car->getCoordX() + 1, "|");
+    mvaddstr(car->getCoordX(), car->getCoordY(), "|");
+    mvaddstr(car->getCoordX(), car->getCoordY() + 1, "|");
+    mvaddstr(car->getCoordX() + 1, car->getCoordY(), "|");
+    mvaddstr(car->getCoordX() + 1, car->getCoordY() + 1, "|");
 }
 
 void Animator::animate(std::list<std::shared_ptr<Car>> &cars) {

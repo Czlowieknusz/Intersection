@@ -8,13 +8,14 @@
 #include <thread>
 #include <ncurses.h>
 
-Factory::Factory() : cars_({std::make_shared<Car>(5, 5, false)}),
+Factory::Factory() : cars_({}),
                      animator_(std::make_shared<Animator>()), mover_(std::make_shared<Mover>()),
                      isEndOfProgram(false) {
     std::thread animateThread([this]() { animationLoop(); });
     std::thread moverThread([this]() { moverLoop(); });
     std::thread worldEnder([this]() { checkIfEnd(); });
 
+    cars_.emplace_back(std::make_shared<Car>(20, 20, false));
     while (not isEndOfProgram) {
         // tu wytwarzamy auta
     }
@@ -35,7 +36,7 @@ void Factory::checkIfEnd() {
 void Factory::moverLoop() {
     while (not isEndOfProgram) {
         usleep(500000);
-        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        //std::lock_guard<std::mutex> lockGuard(factoryMutex);
         mover_->moveCars(cars_);
         // Tutaj dodać resztę list i zastąpić ogólną
     }
@@ -46,7 +47,7 @@ void Factory::animationLoop() {
     while (not isEndOfProgram) {
         usleep(500000);
         animator_->animateIntersection();
-        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        //std::lock_guard<std::mutex> lockGuard(factoryMutex);
         animator_->animate(cars_);
         animator_->animate(topCars_);
         animator_->animate(bottomCars_);
