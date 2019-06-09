@@ -23,6 +23,8 @@ public:
 
     void animateRoadMarking();
 
+    void animateRoad();
+
     void animateCars(std::list<std::shared_ptr<Car>> &cars);
 
     void animateCar(const std::shared_ptr<Car> &car);

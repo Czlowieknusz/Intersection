@@ -13,15 +13,15 @@ Factory::Factory() : cars_({}),
                      isEndOfProgram(false) {
     std::thread animateThread([this]() { animationLoop(); });
     std::thread moverThread([this]() { moverLoop(); });
-    std::thread worldEnder([this]() { checkIfEnd(); });
+ //   std::thread worldEnder([this]() { checkIfEnd(); });
 
-    cars_.emplace_back(std::make_shared<Car>(20, 20, false));
+    cars_.emplace_back(std::make_shared<Car>(0, 35, false));
     while (not isEndOfProgram) {
         // tu wytwarzamy auta
     }
     animateThread.join();
     moverThread.join();
-    worldEnder.join();
+ //   worldEnder.join();
 }
 
 void Factory::checkIfEnd() {
@@ -36,7 +36,7 @@ void Factory::checkIfEnd() {
 void Factory::moverLoop() {
     while (not isEndOfProgram) {
         usleep(500000);
-        //std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        std::lock_guard<std::mutex> lockGuard(factoryMutex);
         mover_->moveCars(cars_);
         // Tutaj dodać resztę list i zastąpić ogólną
     }
@@ -47,12 +47,12 @@ void Factory::animationLoop() {
     while (not isEndOfProgram) {
         usleep(500000);
         animator_->animateIntersection();
-        //std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        std::lock_guard<std::mutex> lockGuard(factoryMutex);
         animator_->animate(cars_);
-        animator_->animate(topCars_);
-        animator_->animate(bottomCars_);
-        animator_->animate(leftCars_);
-        animator_->animate(rightCars_);
+//        animator_->animate(topCars_);
+ //       animator_->animate(bottomCars_);
+  //      animator_->animate(leftCars_);
+   //     animator_->animate(rightCars_);
     }
 }
 
