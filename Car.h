@@ -10,7 +10,6 @@
 class Car {
     Direction direction_;
     int coord_X, coord_Y;
-    bool isVertical;
 
     void move(int x, int y);
 
@@ -31,7 +30,7 @@ public:
 
     void moveRight();
 
-    Car(int coordX, int coordY, Direction direction);
+    Car(int sizeX, int sizeY, Direction direction);
 
     Direction getDirection() const;
 

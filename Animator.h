@@ -25,6 +25,10 @@ public:
 
     void animateRoad();
 
+    int getSizeX() const;
+
+    int getSizeY() const;
+
     void animateCars(std::list<std::shared_ptr<Car>> &cars);
 
     void animateCar(const std::shared_ptr<Car> &car);

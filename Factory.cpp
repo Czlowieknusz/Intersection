@@ -15,9 +15,11 @@ Factory::Factory() : cars_({}),
     std::thread moverThread([this]() { moverLoop(); });
     std::thread worldEnder([this]() { checkIfEnd(); });
 
-    cars_.emplace_back(std::make_shared<Car>(0, 35, directionGenerator_->getRandom()));
     while (not isEndOfProgram) {
         // tu wytwarzamy auta
+        cars_.emplace_back(
+                std::make_shared<Car>(animator_->getSizeX(), animator_->getSizeY(), directionGenerator_->getRandom()));
+        usleep(10000000);
     }
     animateThread.join();
     moverThread.join();

@@ -10,8 +10,26 @@ void Car::move(int x, int y) {
 
 }
 
-Car::Car(int coordX, int coordY, Direction direction) : coord_X(coordX), coord_Y(coordY),
-                                                        direction_(direction) {}
+Car::Car(int sizeX, int sizeY, Direction direction) : direction_(direction) {
+    switch (direction_) {
+        case Direction::TOP:
+            coord_X = sizeX;
+            coord_Y = 40;
+            break;
+        case Direction::BOTTOM:
+            coord_X = 0;
+            coord_Y = 35;
+            break;
+        case Direction::LEFT:
+            coord_X = 11;
+            coord_Y = sizeY;
+            break;
+        case Direction::RIGHT:
+            coord_X = 14;
+            coord_Y = 0;
+            break;
+    }
+}
 
 int Car::getCoordX() const {
     return coord_X;

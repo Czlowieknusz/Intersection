@@ -113,10 +113,22 @@ void Animator::animateCars(std::list<std::shared_ptr<Car>> &cars) {
 }
 
 void Animator::animateCar(const std::shared_ptr<Car> &car) {
-    mvaddstr(car->getCoordX(), car->getCoordY(), "|");
-    mvaddstr(car->getCoordX(), car->getCoordY() + 1, "|");
-    mvaddstr(car->getCoordX() + 1, car->getCoordY(), "|");
-    mvaddstr(car->getCoordX() + 1, car->getCoordY() + 1, "|");
+    switch (car->getDirection()) {
+        case Direction::TOP:
+        case Direction::BOTTOM:
+            mvaddstr(car->getCoordX(), car->getCoordY(), "|");
+            mvaddstr(car->getCoordX(), car->getCoordY() + 1, "|");
+            mvaddstr(car->getCoordX() + 1, car->getCoordY(), "|");
+            mvaddstr(car->getCoordX() + 1, car->getCoordY() + 1, "|");
+            break;
+        case Direction::LEFT:
+        case Direction::RIGHT:
+            mvaddstr(car->getCoordX(), car->getCoordY(), "|");
+            mvaddstr(car->getCoordX(), car->getCoordY() + 1, "|");
+            mvaddstr(car->getCoordX(), car->getCoordY() + 2, "|");
+            mvaddstr(car->getCoordX(), car->getCoordY() + 3, "|");
+            break;
+    }
 }
 
 void Animator::animate(std::list<std::shared_ptr<Car>> &cars) {
@@ -146,4 +158,12 @@ void Animator::animateRoad() {
             addstr("_");
         }
     }
+}
+
+int Animator::getSizeX() const {
+    return size_X;
+}
+
+int Animator::getSizeY() const {
+    return size_Y;
 }
