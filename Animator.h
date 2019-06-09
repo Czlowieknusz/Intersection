@@ -8,9 +8,11 @@
 
 #include <list>
 #include <memory>
+#include <queue>
 #include "Car.h"
 
 class Animator {
+public:
     void initScreen();
 
     void animateIntersection();
@@ -21,16 +23,16 @@ class Animator {
 
     void animateRoadMarking();
 
-    void animateCars();
+    void animateCars(std::list<std::shared_ptr<Car>> &cars);
 
     void animateCar(const std::shared_ptr<Car> &car);
 
     void animateCar(const int);
+    void animate(std::list<std::shared_ptr<Car>> &cars);
 
     int size_X, size_Y;
-    std::list<std::shared_ptr<Car>> &cars_;
-public:
-    Animator(std::list<std::shared_ptr<Car>> &cars);
+
+    Animator();
 
     virtual ~Animator();
 

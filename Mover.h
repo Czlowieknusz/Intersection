@@ -6,8 +6,13 @@
 #define INTERSECTION_MOVER_H
 
 
-class Mover {
+#include "Car.h"
+#include <list>
+#include <memory>
 
+class Mover {
+public:
+    void moveCars(std::list<std::shared_ptr<Car>> &cars);
 };
 
 

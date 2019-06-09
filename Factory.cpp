@@ -8,33 +8,50 @@
 #include <thread>
 #include <ncurses.h>
 
-Factory::Factory() : cars_({std::make_shared<Car>(2, 2, false)}),
-                     animator_(std::make_shared<Animator>(cars_)),
+Factory::Factory() : cars_({std::make_shared<Car>(5, 5, false)}),
+                     animator_(std::make_shared<Animator>()), mover_(std::make_shared<Mover>()),
                      isEndOfProgram(false) {
-    std::thread animateThread(&Animator::animationLoop, animator_);
-//    std::thread worldEnder(&Factory::checkIfEnd, this);
-    while (not isEndOfProgram) {
+    std::thread animateThread([this]() { animationLoop(); });
+    std::thread moverThread([this]() { moverLoop(); });
+    std::thread worldEnder([this]() { checkIfEnd(); });
 
+    while (not isEndOfProgram) {
+        // tu wytwarzamy auta
     }
     animateThread.join();
-    //   worldEnder.join();
-    //cars_.emplace_back(std::make_shared<Car>(2, 2));
+    moverThread.join();
+    worldEnder.join();
 }
 
 void Factory::checkIfEnd() {
     while (not isEndOfProgram) {
         if (getch()) {
             isEndOfProgram = true;
+            exit(1);
         }
     }
 }
 
 void Factory::moverLoop() {
     while (not isEndOfProgram) {
-        for (auto &car : cars_) {
-            usleep(100000);
-            std::lock_guard<std::mutex> lockGuard(factoryMutex);
-            car->moveRight();
-        }
+        usleep(500000);
+        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        mover_->moveCars(cars_);
+        // Tutaj dodać resztę list i zastąpić ogólną
     }
 }
+
+// petla ma wywolywac funkcje, reszta ma miec miejsce wewnatrz
+void Factory::animationLoop() {
+    while (not isEndOfProgram) {
+        usleep(500000);
+        animator_->animateIntersection();
+        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        animator_->animate(cars_);
+        animator_->animate(topCars_);
+        animator_->animate(bottomCars_);
+        animator_->animate(leftCars_);
+        animator_->animate(rightCars_);
+    }
+}
+

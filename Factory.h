@@ -14,19 +14,21 @@
 #include "Mover.h"
 
 class Factory {
-    std::queue<std::shared_ptr<Car>> topCars_;
-    std::queue<std::shared_ptr<Car>> bottomCars_;
-    std::queue<std::shared_ptr<Car>> leftCars_;
-    std::queue<std::shared_ptr<Car>> rightCars_;
+    std::list<std::shared_ptr<Car>> topCars_;
+    std::list<std::shared_ptr<Car>> bottomCars_;
+    std::list<std::shared_ptr<Car>> leftCars_;
+    std::list<std::shared_ptr<Car>> rightCars_;
     std::list<std::shared_ptr<Car>> cars_;
     std::shared_ptr<Animator> animator_;
-    Mover mover;
+    std::shared_ptr<Mover> mover_;
     std::mutex factoryMutex;
     bool isEndOfProgram;
 
     void checkIfEnd();
 
     void moverLoop();
+
+    void animationLoop();
 
     void createCar();
 

@@ -3,3 +3,10 @@
 //
 
 #include "Mover.h"
+
+// tutaj logika wykrywająca czy top czy bottom itd. albo templatka
+void Mover::moveCars(std::list<std::shared_ptr<Car>> &cars) {
+    for (auto &car: cars) {
+        car->moveRight();
+    }
+}

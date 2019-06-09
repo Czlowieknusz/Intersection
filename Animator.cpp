@@ -13,19 +13,8 @@ void Animator::initScreen() {
     getmaxyx(stdscr, size_X, size_Y);
 }
 
-Animator::Animator(std::list<std::shared_ptr<Car>> &cars) : cars_(cars) {
+Animator::Animator() : size_X(0), size_Y(0) {
     initScreen();
-}
-
-void Animator::animationLoop() {
-    animateIntersection();
-//    usleep(500000);
-//    getch();
-    while (true) {
-        animateCars();
-        refresh();
-        usleep(500000);
-    }
 }
 
 /*
@@ -105,10 +94,10 @@ void Animator::animateRoadMarking() {
     }
 }
 
-void Animator::animateCars() {
+void Animator::animateCars(std::list<std::shared_ptr<Car>> &cars) {
     attron(COLOR_PAIR(3));
 
-    for (const auto &car : cars_) {
+    for (const auto &car : cars) {
         animateCar(car);
     }
 }
@@ -118,4 +107,9 @@ void Animator::animateCar(const std::shared_ptr<Car> &car) {
     mvaddstr(car->getCoordX(), car->getCoordX() + 1, "|");
     mvaddstr(car->getCoordX() + 1, car->getCoordX(), "|");
     mvaddstr(car->getCoordX() + 1, car->getCoordX() + 1, "|");
+}
+
+void Animator::animate(std::list<std::shared_ptr<Car>> &cars) {
+    animateCars(cars);
+    refresh();
 }
