@@ -36,10 +36,14 @@ bool Mover::checkIfFreeToMove(std::list<std::shared_ptr<Car>>::iterator car, std
             if (car->get()->getCoordY() > intersectionFromRight) {
                 if (car == cars.begin()) {
                     return true;
-                } else if (car->get()->getCoordY() < std::prev(car, 1)->get()->getCoordY() + 4) {
+                } else if (car->get()->getCoordY() >= std::prev(car, 1)->get()->getCoordY() + 8) {
 //                    car->get()->setCoordY(std::prev(car, 1)->get()->getCoordY() - 1);
   //                  car->get()->setCoordX(std::prev(car, 1)->get()->getCoordX() - 1);
-                    return false;
+                    return true;
+                }
+                else {
+    //                car->get()->setCoordY(std::prev(car, 1)->get()->getCoordY() + 8);
+
                 }
             }
             return false;
