@@ -24,6 +24,7 @@ void Mover::moveCars(std::list<std::shared_ptr<Car>> &cars) {
                 break;
         }
     }
+    checkIfIntersectionClear(cars);
 }
 
 bool Mover::checkIfFreeToMove(std::list<std::shared_ptr<Car>>::iterator car, std::list<std::shared_ptr<Car>> &cars) {
@@ -33,21 +34,42 @@ bool Mover::checkIfFreeToMove(std::list<std::shared_ptr<Car>>::iterator car, std
         case Direction::BOTTOM:
             return true;
         case Direction::LEFT:
-            if (car->get()->getCoordY() > intersectionFromRight) {
+            if (isSubordinatedClear) {
+                return true;
+            } else if (car->get()->getCoordY() > intersectionFromRight) {
                 if (car == cars.begin()) {
                     return true;
                 } else if (car->get()->getCoordY() >= std::prev(car, 1)->get()->getCoordY() + 8) {
-//                    car->get()->setCoordY(std::prev(car, 1)->get()->getCoordY() - 1);
-  //                  car->get()->setCoordX(std::prev(car, 1)->get()->getCoordX() - 1);
                     return true;
-                }
-                else {
-    //                car->get()->setCoordY(std::prev(car, 1)->get()->getCoordY() + 8);
-
                 }
             }
             return false;
         case Direction::RIGHT:
             return true;
+    }
+}
+
+void Mover::checkIfIntersectionClear(std::list<std::shared_ptr<Car>> &cars) {
+    for (auto &car : cars) {
+        if (car->getCoordY() < intersectionFromRight and car->getCoordY() > intersectionFromLeft
+            and car->getCoordX() < intersectionFromBottom and car->getCoordX() > intersectionFromTop) {
+            if (car->getDirection() == Direction::RIGHT or car->getDirection() == Direction::LEFT) {
+                isMainClear = false;
+                return;
+            } else {
+                isSubordinatedClear = false;
+                return;
+            }
+        }
+    }
+    if (not cars.empty()) {
+        if (cars.begin()->get()->getDirection() == Direction::RIGHT or
+            cars.begin()->get()->getDirection() == Direction::LEFT) {
+            isMainClear = true;
+            return;
+        } else {
+            isSubordinatedClear = true;
+            return;
+        }
     }
 }
