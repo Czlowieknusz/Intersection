@@ -34,16 +34,16 @@ bool Mover::checkIfFreeToMove(std::list<std::shared_ptr<Car>>::iterator car, std
         case Direction::BOTTOM:
             return true;
         case Direction::LEFT:
-            if (isSubordinatedClear) {
-                return true;
-            } else if (car->get()->getCoordY() > intersectionFromRight) {
+            if (not isSubordinatedClear and car->get()->getCoordY() == intersectionFromRight - 1) {
+                return false;
+            } else if (car->get()->getCoordY() >= intersectionFromRight) {
                 if (car == cars.begin()) {
                     return true;
                 } else if (car->get()->getCoordY() >= std::prev(car, 1)->get()->getCoordY() + 8) {
                     return true;
                 }
             }
-            return false;
+            return true;
         case Direction::RIGHT:
             return true;
     }
