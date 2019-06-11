@@ -59,10 +59,10 @@ void Factory::moverLoop() {
     while (not isEndOfProgram) {
         usleep(100000);
         std::lock_guard<std::mutex> lockGuard(factoryMutex);
-        mover_->moveCars(topCars_);
-        mover_->moveCars(bottomCars_);
-        mover_->moveCars(leftCars_);
-        mover_->moveCars(rightCars_);
+//        mover_->moveCars(topCars_);
+  //      mover_->moveCars(bottomCars_);
+        mover_->checkIfIntersectionClear(leftCars_);
+        mover_->checkIfIntersectionClear(rightCars_);
         // Tutaj dodać resztę list i zastąpić ogólną
     }
 }
