@@ -112,18 +112,23 @@ bool Mover::checkIfFreeToMove(std::list<std::shared_ptr<Car>>::iterator car, std
 
 void Mover::checkIfIntersectionClear(std::list<std::shared_ptr<Car>> &cars) {
     for (auto &car : cars) {
-        if (car->getCoordY() < intersectionFromRight + 4 and car->getCoordY() > intersectionFromLeft - 4
-            and car->getCoordX() < intersectionFromBottom and car->getCoordX() > intersectionFromTop) {
-            if (car->getDirection() == Direction::RIGHT) {
+        if (car->getDirection() == Direction::RIGHT) {
+            if (car->getCoordY() < intersectionFromRight + 6 and car->getCoordY() > intersectionFromLeft - 6) {
                 isRightCenter = true;
                 return;
-            } else if (car->getDirection() == Direction::LEFT) {
+            }
+        } else if (car->getDirection() == Direction::LEFT) {
+            if (car->getCoordY() < intersectionFromRight + 6 and car->getCoordY() > intersectionFromLeft - 6) {
                 isLeftCenter = true;
                 return;
-            } else if (car->getDirection() == Direction::TOP) {
+            }
+        } else if (car->getDirection() == Direction::TOP) {
+            if (car->getCoordX() < intersectionFromBottom and car->getCoordX() > intersectionFromTop) {
                 isTopCenter = true;
                 return;
-            } else {
+            }
+        } else {
+            if (car->getCoordX() < intersectionFromBottom and car->getCoordX() > intersectionFromTop) {
                 isBottomCenter = true;
                 return;
             }
