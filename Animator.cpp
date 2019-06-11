@@ -95,13 +95,13 @@ void Animator::animateRoadMarking() {
         mvaddstr(16 + i, 38, "|");
     }
     move(9, 33);
-    for (int i = 0; i < 5; ++i) {
-        addstr("_");
+    for (int i = 0; i < 3; ++i) {
+        addstr("_ ");
     }
 
     move(15, 39);
-    for (int i = 0; i < 5; ++i) {
-        addstr("_");
+    for (int i = 0; i < 3; ++i) {
+        addstr("_ ");
     }
 }
 
