@@ -18,7 +18,7 @@ Factory::Factory() : cars_({}),
     while (not isEndOfProgram) {
         // tu wytwarzamy auta
         createCar();
-        usleep(500000);
+        usleep(900000);
     }
     animateThread.join();
     moverThread.join();
