@@ -36,7 +36,9 @@ class Factory {
 
     void carLoop(std::shared_ptr<Car> &car, std::shared_ptr<Car> &prevCar);
 
-    void createCar();
+    void carLoop(std::shared_ptr<Car> &car);
+
+    void createCar(std::list<std::shared_ptr<Car>> &cars, std::shared_ptr<Car> &car);
 
 public:
     Factory();

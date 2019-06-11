@@ -10,10 +10,16 @@
 
 class Car {
     Direction direction_;
-    int coord_X, coord_Y;
+    int coord_X, coord_Y, intersectionFromTop = 10, intersectionFromBottom = 16;
 
 public:
-    void move(std::shared_ptr<Car>& prevCar);
+    bool checkIfFreeToMove(std::shared_ptr<Car> &prevCar);
+
+    void move(std::shared_ptr<Car> &prevCar);
+
+    bool checkIfFreeToMove();
+
+    void move();
 
     int getCoordX() const;
 
