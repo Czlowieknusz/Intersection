@@ -6,21 +6,30 @@
 
 Car::~Car() = default;
 
-void Car::move(std::shared_ptr<Car>& prevCar) {
+void Car::move(std::shared_ptr<Car> &prevCar) {
     switch (direction_) {
         case Direction::TOP:
-            moveUp();
+            //if (checkIfFreeToMove(car, cars)) {
+                moveUp();
+            //}
             break;
         case Direction::BOTTOM:
-            moveDown();
+          //  if (checkIfFreeToMove(car, cars)) {
+                moveDown();
+        //    }
             break;
         case Direction::LEFT:
-            moveLeft();
+      //      if (checkIfFreeToMove(car, cars)) {
+                moveLeft();
+    //        }
             break;
         case Direction::RIGHT:
-            moveRight();
+  //          if (checkIfFreeToMove(car, cars)) {
+                moveRight();
+//            }
             break;
     }
+
 }
 
 Car::Car(int sizeX, int sizeY, Direction direction) : direction_(direction) {

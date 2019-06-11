@@ -21,21 +21,36 @@ Factory::Factory() : cars_({}),
         switch (car->getDirection()) {
             case Direction::TOP: {
                 bottomCars_.push_back(car);
-                auto& prevCar = *std::prev(bottomCars_.end(), 2);
-                auto& mainCar = *std::prev(bottomCars_.end(), 1);
+                auto &prevCar = *std::prev(bottomCars_.end(), 2);
+                auto &mainCar = *std::prev(bottomCars_.end(), 1);
                 std::thread threadCar([&mainCar, &prevCar, this]() { carLoop(std::ref(mainCar), std::ref(prevCar)); });
                 threadCars.push_back(std::move(threadCar));
                 break;
             }
-            case Direction::BOTTOM:
+            case Direction::BOTTOM: {
                 topCars_.push_back(car);
+                auto &prevCar = *std::prev(topCars_.end(), 2);
+                auto &mainCar = *std::prev(topCars_.end(), 1);
+                std::thread threadCar([&mainCar, &prevCar, this]() { carLoop(std::ref(mainCar), std::ref(prevCar)); });
+                threadCars.push_back(std::move(threadCar));
                 break;
-            case Direction::LEFT:
+            }
+            case Direction::LEFT: {
                 rightCars_.push_back(car);
+                auto &prevCar = *std::prev(rightCars_.end(), 2);
+                auto &mainCar = *std::prev(rightCars_.end(), 1);
+                std::thread threadCar([&mainCar, &prevCar, this]() { carLoop(std::ref(mainCar), std::ref(prevCar)); });
+                threadCars.push_back(std::move(threadCar));
                 break;
-            case Direction::RIGHT:
+            }
+            case Direction::RIGHT: {
                 leftCars_.push_back(car);
+                auto &prevCar = *std::prev(leftCars_.end(), 2);
+                auto &mainCar = *std::prev(leftCars_.end(), 1);
+                std::thread threadCar([&mainCar, &prevCar, this]() { carLoop(std::ref(mainCar), std::ref(prevCar)); });
+                threadCars.push_back(std::move(threadCar));
                 break;
+            }
         }
         usleep(900000);
     }
