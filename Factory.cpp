@@ -82,13 +82,14 @@ void Factory::animationLoop() {
 }
 
 void Factory::createCar(std::list<std::shared_ptr<Car>> &cars, std::shared_ptr<Car> &car) {
-    cars.push_back(car);
-    if (car == *cars.begin()) {
-        std::thread threadCar([&car, this]() { carLoop(std::ref(car)); });
+    cars.push_back(std::move(car));
+    auto &mainCar = *std::prev(cars.end(), 1);
+    if (mainCar == *cars.begin()) {
+        std::thread threadCar([&mainCar, this]() { carLoop(std::ref(mainCar)); });
         threadCars.push_back(std::move(threadCar));
     } else {
         auto &prevCar = *std::prev(cars.end(), 2);
-        std::thread threadCar([&car, &prevCar, this]() { carLoop(std::ref(car), std::ref(prevCar)); });
+        std::thread threadCar([&mainCar, &prevCar, this]() { carLoop(std::ref(mainCar), std::ref(prevCar)); });
         threadCars.push_back(std::move(threadCar));
     }
 }
