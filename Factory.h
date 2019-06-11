@@ -13,8 +13,11 @@
 #include <queue>
 #include "Mover.h"
 #include "DirectionGenerator.h"
+#include <condition_variable>
+#include <thread>
 
 class Factory {
+    std::list<std::thread> threadCars;
     std::list<std::shared_ptr<Car>> topCars_;
     std::list<std::shared_ptr<Car>> bottomCars_;
     std::list<std::shared_ptr<Car>> leftCars_;
@@ -24,6 +27,7 @@ class Factory {
     std::shared_ptr<Mover> mover_;
     std::shared_ptr<DirectionGenerator> directionGenerator_;
     std::mutex factoryMutex;
+    std::condition_variable conditionVariable;
     bool isEndOfProgram;
 
     void checkIfEnd();
@@ -31,6 +35,8 @@ class Factory {
     void moverLoop();
 
     void animationLoop();
+
+    void carLoop(std::list<std::shared_ptr<Car>>::iterator &car, std::list<std::shared_ptr<Car>> &cars);
 
     void createCar();
 

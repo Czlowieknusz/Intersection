@@ -34,6 +34,20 @@ void Factory::checkIfEnd() {
     }
 }
 
+void Factory::carLoop(std::list<std::shared_ptr<Car>>::iterator &car, std::list<std::shared_ptr<Car>> &cars) {
+    while (not isEndOfProgram) {
+//        if (car->checkIfShouldWait()) {
+//
+//        }
+//        if (car->checkIfFreeToMove(car, cars)) {
+//
+//        }
+        usleep(100000);
+        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        //      car->move();
+    }
+}
+
 void Factory::moverLoop() {
     while (not isEndOfProgram) {
         usleep(100000);
@@ -63,18 +77,26 @@ void Factory::animationLoop() {
 void Factory::createCar() {
     auto car = std::make_shared<Car>(animator_->getSizeX(), animator_->getSizeY(), directionGenerator_->getRandom());
     switch (car->getDirection()) {
-        case Direction::TOP:
+        case Direction::TOP: {
             bottomCars_.push_back(car);
+            auto it = bottomCars_.end();
+            it = std::prev(it, 1);
+            std::thread threadCar([&it, this]() { carLoop(it, bottomCars_); });
+            threadCars.push_back(std::move(threadCar));
             break;
-        case Direction::BOTTOM:
+        }
+        case Direction::BOTTOM: {
             topCars_.push_back(car);
             break;
-        case Direction::LEFT:
+        }
+        case Direction::LEFT: {
             rightCars_.push_back(car);
             break;
-        case Direction::RIGHT:
+        }
+        case Direction::RIGHT: {
             leftCars_.push_back(car);
             break;
+        }
     }
 }
 

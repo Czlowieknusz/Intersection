@@ -6,11 +6,27 @@
 
 Car::~Car() = default;
 
-void Car::move(int x, int y) {
-
+void Car::move() {
+    switch (direction_) {
+        case Direction::TOP:
+            moveUp();
+            break;
+        case Direction::BOTTOM:
+            moveDown();
+            break;
+        case Direction::LEFT:
+            moveLeft();
+            break;
+        case Direction::RIGHT:
+            moveRight();
+            break;
+    }
 }
 
-Car::Car(int sizeX, int sizeY, Direction direction) : direction_(direction) {
+Car::Car(int
+         sizeX, int
+         sizeY, Direction
+         direction) : direction_(direction) {
     switch (direction_) {
         case Direction::TOP:
             coord_X = sizeX;
@@ -85,3 +101,64 @@ Direction Car::getDirection() const {
  * \/
  * X
  */
+
+/*
+ * To teraz tak -> tutaj sparawdzamy czy nie walnie w auto z przodu
+ * Inna funkcja sprawdzi czy nie trzeba uśpić.
+ */
+//bool Car::checkIfFreeToMove(std::list<std::shared_ptr<Car>>::iterator car, std::list<std::shared_ptr<Car>> &cars) {
+//    switch (car->get()->getDirection()) {
+//        case Direction::TOP:
+//            if ((isLeftCenter or isRightCenter) and car->get()->getCoordX() == intersectionFromBottom + 1) {
+//                return false;
+//            } else if (car->get()->getCoordX() >= intersectionFromBottom) {
+//                if (car == cars.begin()) {
+//                    return true;
+//                } else if (car->get()->getCoordX() >= std::prev(car, 1)->get()->getCoordX() + 4) {
+//                    return true;
+//                } else if (car->get()->getCoordX() < std::prev(car, 1)->get()->getCoordX() + 4) {
+//                    return false;
+//                }
+//            }
+//            return true;
+//        case Direction::BOTTOM:
+//            if ((isLeftCenter or isRightCenter) and car->get()->getCoordX() == intersectionFromTop - 3) {
+//                return false;
+//            } else if (car->get()->getCoordX() <= intersectionFromTop) {
+//                if (car == cars.begin()) {
+//                    return true;
+//                } else if (car->get()->getCoordX() <= std::prev(car, 1)->get()->getCoordX() - 4) {
+//                    return true;
+//                } else if (car->get()->getCoordX() > std::prev(car, 1)->get()->getCoordX() - 4) {
+//                    return false;
+//                }
+//            }
+//            return true;
+//        case Direction::LEFT:
+//            if ((isTopCenter or isBottomCenter) and car->get()->getCoordY() == intersectionFromRight + 1) {
+//                return false;
+//            } else if (car->get()->getCoordY() >= intersectionFromRight) {
+//                if (car == cars.begin()) {
+//                    return true;
+//                } else if (car->get()->getCoordY() >= std::prev(car, 1)->get()->getCoordY() + 8) {
+//                    return true;
+//                } else if (car->get()->getCoordY() < std::prev(car, 1)->get()->getCoordY() + 8) {
+//                    return false;
+//                }
+//            }
+//            return true;
+//        case Direction::RIGHT:
+//            if ((isTopCenter or isBottomCenter) and car->get()->getCoordY() == intersectionFromLeft - 4) {
+//                return false;
+//            } else if (car->get()->getCoordY() <= intersectionFromLeft - 4) {
+//                if (car == cars.begin()) {
+//                    return true;
+//                } else if (car->get()->getCoordY() <= std::prev(car, 1)->get()->getCoordY() - 8) {
+//                    return true;
+//                } else if (car->get()->getCoordY() > std::prev(car, 1)->get()->getCoordY() - 8) {
+//                    return false;
+//                }
+//            }
+//            return true;
+//    }
+//}

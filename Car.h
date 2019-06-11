@@ -6,14 +6,18 @@
 #define INTERSECTION_CAR_H
 
 #include "Direction.h"
+#include <list>
+#include <memory>
 
 class Car {
     Direction direction_;
     int coord_X, coord_Y;
 
-    void move(int x, int y);
 
 public:
+    bool checkIfFreeToMove(std::list<std::shared_ptr<Car>>::iterator car, std::list<std::shared_ptr<Car>> &cars);
+    void move();
+
     int getCoordX() const;
 
     void setCoordX(int coordX);
