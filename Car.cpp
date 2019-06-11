@@ -6,8 +6,21 @@
 
 Car::~Car() = default;
 
-void Car::move(int x, int y) {
-
+void Car::move(std::shared_ptr<Car>& prevCar) {
+    switch (direction_) {
+        case Direction::TOP:
+            moveUp();
+            break;
+        case Direction::BOTTOM:
+            moveDown();
+            break;
+        case Direction::LEFT:
+            moveLeft();
+            break;
+        case Direction::RIGHT:
+            moveRight();
+            break;
+    }
 }
 
 Car::Car(int sizeX, int sizeY, Direction direction) : direction_(direction) {

@@ -5,15 +5,16 @@
 #ifndef INTERSECTION_CAR_H
 #define INTERSECTION_CAR_H
 
+#include <memory>
 #include "Direction.h"
 
 class Car {
     Direction direction_;
     int coord_X, coord_Y;
 
-    void move(int x, int y);
-
 public:
+    void move(std::shared_ptr<Car>& prevCar);
+
     int getCoordX() const;
 
     void setCoordX(int coordX);

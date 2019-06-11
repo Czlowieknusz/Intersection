@@ -13,6 +13,7 @@
 #include <queue>
 #include "Mover.h"
 #include "DirectionGenerator.h"
+#include <thread>
 
 class Factory {
     std::list<std::shared_ptr<Car>> topCars_;
@@ -20,6 +21,7 @@ class Factory {
     std::list<std::shared_ptr<Car>> leftCars_;
     std::list<std::shared_ptr<Car>> rightCars_;
     std::list<std::shared_ptr<Car>> cars_;
+    std::list<std::thread> threadCars;
     std::shared_ptr<Animator> animator_;
     std::shared_ptr<Mover> mover_;
     std::shared_ptr<DirectionGenerator> directionGenerator_;
@@ -31,6 +33,8 @@ class Factory {
     void moverLoop();
 
     void animationLoop();
+
+    void carLoop(std::shared_ptr<Car> &car, std::shared_ptr<Car> &prevCar);
 
     void createCar();
 

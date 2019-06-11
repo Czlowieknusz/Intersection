@@ -5,7 +5,6 @@
 #include "Factory.h"
 #include <unistd.h>
 #include <iostream>
-#include <thread>
 #include <ncurses.h>
 
 Factory::Factory() : cars_({}),
@@ -17,7 +16,27 @@ Factory::Factory() : cars_({}),
 
     while (not isEndOfProgram) {
         // tu wytwarzamy auta
-        createCar();
+        auto car = std::make_shared<Car>(animator_->getSizeX(), animator_->getSizeY(),
+                                         directionGenerator_->getRandom());
+        switch (car->getDirection()) {
+            case Direction::TOP: {
+                bottomCars_.push_back(car);
+                auto& prevCar = *std::prev(bottomCars_.end(), 2);
+                auto& mainCar = *std::prev(bottomCars_.end(), 1);
+                std::thread threadCar([&mainCar, &prevCar, this]() { carLoop(std::ref(mainCar), std::ref(prevCar)); });
+                threadCars.push_back(std::move(threadCar));
+                break;
+            }
+            case Direction::BOTTOM:
+                topCars_.push_back(car);
+                break;
+            case Direction::LEFT:
+                rightCars_.push_back(car);
+                break;
+            case Direction::RIGHT:
+                leftCars_.push_back(car);
+                break;
+        }
         usleep(900000);
     }
     animateThread.join();
@@ -75,6 +94,17 @@ void Factory::createCar() {
         case Direction::RIGHT:
             leftCars_.push_back(car);
             break;
+    }
+}
+
+void Factory::carLoop(std::shared_ptr<Car> &car, std::shared_ptr<Car> &prevCar) {
+    while (not isEndOfProgram) {
+        usleep(100000);
+        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        for (auto &cara : bottomCars_) {
+            cara->moveUp();
+        }
+//        car->move(prevCar);
     }
 }
 
