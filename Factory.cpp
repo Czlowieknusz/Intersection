@@ -100,11 +100,9 @@ void Factory::createCar() {
 void Factory::carLoop(std::shared_ptr<Car> &car, std::shared_ptr<Car> &prevCar) {
     while (not isEndOfProgram) {
         usleep(100000);
+
         std::lock_guard<std::mutex> lockGuard(factoryMutex);
-        for (auto &cara : bottomCars_) {
-            cara->moveUp();
-        }
-//        car->move(prevCar);
+        car->move(prevCar);
     }
 }
 

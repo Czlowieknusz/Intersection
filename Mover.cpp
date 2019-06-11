@@ -6,30 +6,30 @@
 
 // tutaj logika wykrywająca czy top czy bottom itd. albo templatka
 void Mover::moveCars(std::list<std::shared_ptr<Car>> &cars) {
-    for (auto car = cars.begin(); car != cars.end(); ++car) {
-        switch (car->get()->getDirection()) {
-            case Direction::TOP:
-                if (checkIfFreeToMove(car, cars)) {
-                    car->get()->moveUp();
-                }
-                break;
-            case Direction::BOTTOM:
-                if (checkIfFreeToMove(car, cars)) {
-                    car->get()->moveDown();
-                }
-                break;
-            case Direction::LEFT:
-                if (checkIfFreeToMove(car, cars)) {
-                    car->get()->moveLeft();
-                }
-                break;
-            case Direction::RIGHT:
-                if (checkIfFreeToMove(car, cars)) {
-                    car->get()->moveRight();
-                }
-                break;
-        }
-    }
+//    for (auto car = cars.begin(); car != cars.end(); ++car) {
+//        switch (car->get()->getDirection()) {
+//            case Direction::TOP:
+//                if (checkIfFreeToMove(car, cars)) {
+//                    car->get()->moveUp();
+//                }
+//                break;
+//            case Direction::BOTTOM:
+//                if (checkIfFreeToMove(car, cars)) {
+//                    car->get()->moveDown();
+//                }
+//                break;
+//            case Direction::LEFT:
+//                if (checkIfFreeToMove(car, cars)) {
+//                    car->get()->moveLeft();
+//                }
+//                break;
+//            case Direction::RIGHT:
+//                if (checkIfFreeToMove(car, cars)) {
+//                    car->get()->moveRight();
+//                }
+//                break;
+//        }
+//    }
     checkIfIntersectionClear(cars);
 }
 
