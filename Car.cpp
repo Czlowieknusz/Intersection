@@ -17,7 +17,7 @@ Car::Car(int sizeX, int sizeY, Direction direction) : direction_(direction) {
             coord_Y = 40;
             break;
         case Direction::BOTTOM:
-            coord_X = 0;
+            coord_X = -4;
             coord_Y = 35;
             break;
         case Direction::LEFT:
