@@ -94,6 +94,15 @@ void Animator::animateRoadMarking() {
     for (int i = 0; i < 10; ++i) {
         mvaddstr(16 + i, 38, "|");
     }
+    move(9, 33);
+    for (int i = 0; i < 5; ++i) {
+        addstr("_");
+    }
+
+    move(15, 39);
+    for (int i = 0; i < 5; ++i) {
+        addstr("_");
+    }
 }
 
 void Animator::animateCars(std::list<std::shared_ptr<Car>> &cars) {
