@@ -8,7 +8,8 @@
 #include <ncurses.h>
 
 Factory::Factory() : cars_({}),
-                     animator_(std::make_shared<Animator>()), mover_(std::make_shared<Mover>()),
+                     animator_(std::make_shared<Animator>()),
+                     mover_(std::make_shared<Mover>(std::ref(conditionVariable))),
                      isEndOfProgram(false), directionGenerator_(std::make_shared<DirectionGenerator>()) {
     std::thread animateThread([this]() { animationLoop(); });
     std::thread moverThread([this]() { moverLoop(); });
@@ -60,7 +61,7 @@ void Factory::moverLoop() {
         usleep(100000);
         std::lock_guard<std::mutex> lockGuard(factoryMutex);
 //        mover_->moveCars(topCars_);
-  //      mover_->moveCars(bottomCars_);
+        //      mover_->moveCars(bottomCars_);
         mover_->checkIfIntersectionClear(leftCars_);
         mover_->checkIfIntersectionClear(rightCars_);
         // Tutaj dodać resztę list i zastąpić ogólną
@@ -97,8 +98,16 @@ void Factory::createCar(std::list<std::shared_ptr<Car>> &cars, std::shared_ptr<C
 void Factory::carLoop(std::shared_ptr<Car> &car, std::shared_ptr<Car> &prevCar) {
     while (not isEndOfProgram) {
         usleep(100000);
-
-        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        if (mover_->isLeftCenter or mover_->isRightCenter) {
+            if (car->getDirection() == Direction::BOTTOM and car->getCoordX() == intersectionFromBottom + 1) {
+                std::unique_lock<std::mutex> mlock(factoryMutex);
+                conditionVariable.wait(mlock);
+            }
+            if (car->getDirection() == Direction::TOP and car->getCoordX() == intersectionFromTop - 3) {
+                std::unique_lock<std::mutex> mlock(factoryMutex);
+                conditionVariable.wait(mlock);
+            }
+        }
         car->move(prevCar);
     }
 }
@@ -106,8 +115,26 @@ void Factory::carLoop(std::shared_ptr<Car> &car, std::shared_ptr<Car> &prevCar) 
 void Factory::carLoop(std::shared_ptr<Car> &car) {
     while (not isEndOfProgram) {
         usleep(100000);
-
-        std::lock_guard<std::mutex> lockGuard(factoryMutex);
+        if (mover_->isLeftCenter or mover_->isRightCenter) {
+            if (car->getDirection() == Direction::BOTTOM and car->getCoordX() == intersectionFromBottom + 1) {
+                std::unique_lock<std::mutex> mlock(factoryMutex);
+                conditionVariable.wait(mlock);
+            }
+            if (car->getDirection() == Direction::TOP and car->getCoordX() == intersectionFromTop - 3) {
+                std::unique_lock<std::mutex> mlock(factoryMutex);
+                conditionVariable.wait(mlock);
+            }
+        }
         car->move();
     }
 }
+/*
+ *     // Acquire the lock
+    std::unique_lock<std::mutex> mlock(m_mutex);
+    // Start waiting for the Condition Variable to get signaled
+    // Wait() will internally release the lock and make the thread to block
+    // As soon as condition variable get signaled, resume the thread and
+    // again acquire the lock. Then check if condition is met or not
+    // If condition is met then continue else again go in wait.
+    m_condVar.wait(mlock, std::bind(&Application::isDataLoaded, this));
+ */

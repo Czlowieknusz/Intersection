@@ -145,4 +145,9 @@ void Mover::checkIfIntersectionClear(std::list<std::shared_ptr<Car>> &cars) {
             isBottomCenter = false;
         }
     }
+    if (not isRightCenter and not isLeftCenter) {
+
+    }
 }
+
+Mover::Mover(std::condition_variable conditionVariable) : conditionVariable_(conditionVariable) {}

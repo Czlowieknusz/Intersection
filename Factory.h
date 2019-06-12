@@ -14,6 +14,7 @@
 #include "Mover.h"
 #include "DirectionGenerator.h"
 #include <thread>
+#include <condition_variable>
 
 class Factory {
     std::list<std::shared_ptr<Car>> topCars_;
@@ -25,7 +26,9 @@ class Factory {
     std::shared_ptr<Animator> animator_;
     std::shared_ptr<Mover> mover_;
     std::shared_ptr<DirectionGenerator> directionGenerator_;
+    std::condition_variable conditionVariable;
     std::mutex factoryMutex;
+    int intersectionFromLeft = 33, intersectionFromRight = 44, intersectionFromTop = 10, intersectionFromBottom = 16;
     bool isEndOfProgram;
 
     void checkIfEnd();
