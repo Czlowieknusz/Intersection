@@ -149,5 +149,3 @@ void Mover::checkIfIntersectionClear(std::list<std::shared_ptr<Car>> &cars) {
 
     }
 }
-
-Mover::Mover(std::condition_variable conditionVariable) : conditionVariable_(conditionVariable) {}

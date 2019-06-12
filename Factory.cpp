@@ -9,7 +9,7 @@
 
 Factory::Factory() : cars_({}),
                      animator_(std::make_shared<Animator>()),
-                     mover_(std::make_shared<Mover>(std::ref(conditionVariable))),
+                     mover_(std::make_shared<Mover>()),
                      isEndOfProgram(false), directionGenerator_(std::make_shared<DirectionGenerator>()) {
     std::thread animateThread([this]() { animationLoop(); });
     std::thread moverThread([this]() { moverLoop(); });
@@ -99,11 +99,11 @@ void Factory::carLoop(std::shared_ptr<Car> &car, std::shared_ptr<Car> &prevCar) 
     while (not isEndOfProgram) {
         usleep(100000);
         if (mover_->isLeftCenter or mover_->isRightCenter) {
-            if (car->getDirection() == Direction::BOTTOM and car->getCoordX() == intersectionFromBottom + 1) {
+            if (car->getDirection() == Direction::TOP and car->getCoordX() == intersectionFromBottom + 1) {
                 std::unique_lock<std::mutex> mlock(factoryMutex);
                 conditionVariable.wait(mlock);
             }
-            if (car->getDirection() == Direction::TOP and car->getCoordX() == intersectionFromTop - 3) {
+            if (car->getDirection() == Direction::BOTTOM and car->getCoordX() == intersectionFromTop - 3) {
                 std::unique_lock<std::mutex> mlock(factoryMutex);
                 conditionVariable.wait(mlock);
             }
@@ -116,11 +116,11 @@ void Factory::carLoop(std::shared_ptr<Car> &car) {
     while (not isEndOfProgram) {
         usleep(100000);
         if (mover_->isLeftCenter or mover_->isRightCenter) {
-            if (car->getDirection() == Direction::BOTTOM and car->getCoordX() == intersectionFromBottom + 1) {
+            if (car->getDirection() == Direction::TOP and car->getCoordX() == intersectionFromBottom + 1) {
                 std::unique_lock<std::mutex> mlock(factoryMutex);
                 conditionVariable.wait(mlock);
             }
-            if (car->getDirection() == Direction::TOP and car->getCoordX() == intersectionFromTop - 3) {
+            if (car->getDirection() == Direction::BOTTOM and car->getCoordX() == intersectionFromTop - 3) {
                 std::unique_lock<std::mutex> mlock(factoryMutex);
                 conditionVariable.wait(mlock);
             }
