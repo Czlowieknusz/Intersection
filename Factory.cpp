@@ -64,6 +64,9 @@ void Factory::moverLoop() {
         //      mover_->moveCars(bottomCars_);
         mover_->checkIfIntersectionClear(leftCars_);
         mover_->checkIfIntersectionClear(rightCars_);
+        if (not mover_->isLeftCenter and not mover_->isRightCenter) {
+            conditionVariable.notify_all();
+        }
         // Tutaj dodać resztę list i zastąpić ogólną
     }
 }
