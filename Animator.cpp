@@ -106,14 +106,6 @@ void Animator::animateRoadMarking() {
 }
 
 void Animator::animateCars(std::list<std::shared_ptr<Car>> &cars) {
-//    const std::string RcordX = std::to_string(cars.rbegin()->get()->getCoordX());
-//    const std::string RcordY = std::to_string(cars.rbegin()->get()->getCoordY());
-//    mvaddstr(15, 20, RcordX.c_str());
-//    mvaddstr(15, 22, RcordY.c_str());
-//    const std::string cordX = std::to_string(cars.front()->getCoordX());
-//    const std::string cordY = std::to_string(cars.front()->getCoordY());
-//    mvaddstr(20, 20, cordX.c_str());
-//    mvaddstr(22, 22, cordY.c_str());
     attron(COLOR_PAIR(3));
 
     for (const auto &car : cars) {
@@ -144,14 +136,6 @@ void Animator::animate(std::list<std::shared_ptr<Car>> &cars) {
     animateCars(cars);
     refresh();
 }
-
-/*
- *     attron(COLOR_PAIR(1));
-    animateSquare(0, 0, 10, 33);
-    animateSquare(0, 44, 10, size_Y);
-    animateSquare(16, 0, size_X, 33);
-    animateSquare(16, 44, size_X, size_Y);
- */
 
 void Animator::animateRoad() {
     attron(COLOR_PAIR(4));

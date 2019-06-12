@@ -27,7 +27,6 @@ void Car::move(std::shared_ptr<Car> &prevCar) {
     }
 }
 
-// ogarnac dla pierwszego
 bool Car::checkIfFreeToMove(std::shared_ptr<Car> &prevCar) {
     switch (direction_) {
         case Direction::TOP:
@@ -126,22 +125,3 @@ void Car::moveRight() {
 Direction Car::getDirection() const {
     return direction_;
 }
-/*
- *
- * C = animateSquare(0, 0, 2, 15);
- * __________________________________________> Y
- * |
- * |
- * | (C)|||||||||||||
- * |    |||||||||||||
- * |
- * |
- * |  (10, 2)
- * |   X
- * |
- * |
- * |
- * |
- * \/
- * X
- */

@@ -16,7 +16,6 @@ Factory::Factory() : cars_({}),
     std::thread worldEnder([this]() { checkIfEnd(); });
 
     while (not isEndOfProgram) {
-        // tu wytwarzamy auta
         auto car = std::make_shared<Car>(animator_->getSizeX(), animator_->getSizeY(),
                                          directionGenerator_->getRandom());
         switch (car->getDirection()) {
@@ -60,24 +59,19 @@ void Factory::moverLoop() {
     while (not isEndOfProgram) {
         usleep(100000);
         std::lock_guard<std::mutex> lockGuard(factoryMutex);
-//        mover_->moveCars(topCars_);
-        //      mover_->moveCars(bottomCars_);
         mover_->checkIfIntersectionClear(leftCars_);
         mover_->checkIfIntersectionClear(rightCars_);
         if (not mover_->isLeftCenter and not mover_->isRightCenter) {
             conditionVariable.notify_all();
         }
-        // Tutaj dodać resztę list i zastąpić ogólną
     }
 }
 
-// petla ma wywolywac funkcje, reszta ma miec miejsce wewnatrz
 void Factory::animationLoop() {
     while (not isEndOfProgram) {
         usleep(50000);
         animator_->animateIntersection();
         std::lock_guard<std::mutex> lockGuard(factoryMutex);
-//        animator_->animate(cars_);
         animator_->animate(topCars_);
         animator_->animate(bottomCars_);
         animator_->animate(leftCars_);
@@ -131,13 +125,3 @@ void Factory::carLoop(std::shared_ptr<Car> &car) {
         car->move();
     }
 }
-/*
- *     // Acquire the lock
-    std::unique_lock<std::mutex> mlock(m_mutex);
-    // Start waiting for the Condition Variable to get signaled
-    // Wait() will internally release the lock and make the thread to block
-    // As soon as condition variable get signaled, resume the thread and
-    // again acquire the lock. Then check if condition is met or not
-    // If condition is met then continue else again go in wait.
-    m_condVar.wait(mlock, std::bind(&Application::isDataLoaded, this));
- */

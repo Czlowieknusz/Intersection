@@ -17,8 +17,6 @@ public:
 
     void move(std::shared_ptr<Car> &prevCar);
 
-    bool checkIfFreeToMove();
-
     void move();
 
     int getCoordX() const;
