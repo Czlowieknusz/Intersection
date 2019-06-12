@@ -28,7 +28,7 @@ class Factory {
     std::shared_ptr<DirectionGenerator> directionGenerator_;
     std::condition_variable conditionVariable;
     std::mutex factoryMutex;
-    int intersectionFromLeft = 33, intersectionFromRight = 44, intersectionFromTop = 10, intersectionFromBottom = 16;
+    int intersectionFromTop = 10, intersectionFromBottom = 16;
     bool isEndOfProgram;
 
     void checkIfEnd();
